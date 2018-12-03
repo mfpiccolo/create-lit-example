@@ -1,27 +1,29 @@
-import { component } from "haunted";
+import { component, useContext } from "haunted";
 import { html } from "lit-html";
 
 import "./lit-html-voting";
 import "./vue-voting";
 import "./react-voting";
 
+import { UPDATE_TAB } from "../constants";
 import dispatchCustomEvent from "../dispatchCustomEvent";
+import { StoreContext } from "./store-context";
 
-const getTabComponent = (activeTab, votes, count) => {
+const getTabComponent = activeTab => {
   switch (activeTab) {
     case 1:
       return html`
-        <tab-one .votes="${votes}" .count="${count}"></tab-one>
+        <lit-html-voting></lit-html-voting>
       `;
       break;
     case 2:
       return html`
-        <tab-two .votes="${votes}" .count="${count}"></tab-one>
+        <react-voting></react-voting>
       `;
       break;
     case 3:
       return html`
-        <tab-three .votes="${votes}" .count="${count}"></tab-one>
+        <vue-voting><vue-voting/>
       `;
       break;
     default:
@@ -30,14 +32,18 @@ const getTabComponent = (activeTab, votes, count) => {
 };
 
 function HelloWorld(element) {
-  const { greeting, activeTab, votes, count } = element;
+  const {
+    global: { votes }
+  } = useContext(StoreContext);
+
+  const { greeting, activeTab } = element;
   return html`
     <h1>${greeting}</h1>
 
     <button
       @click="${
         () =>
-          dispatchCustomEvent(element, "UPDATE_TAB", {
+          dispatchCustomEvent(element, UPDATE_TAB, {
             tabNumber: 1,
             greeting: "Vote for lit-html"
           })
@@ -48,7 +54,7 @@ function HelloWorld(element) {
     <button
       @click="${
         () =>
-          dispatchCustomEvent(element, "UPDATE_TAB", {
+          dispatchCustomEvent(element, UPDATE_TAB, {
             tabNumber: 2,
             greeting: "Vote for React"
           })
@@ -59,7 +65,7 @@ function HelloWorld(element) {
     <button
       @click="${
         () =>
-          dispatchCustomEvent(element, "UPDATE_TAB", {
+          dispatchCustomEvent(element, UPDATE_TAB, {
             tabNumber: 3,
             greeting: "Vote for Vue"
           })
@@ -67,10 +73,9 @@ function HelloWorld(element) {
     >
       Vue
     </button>
-
     <p>Total Votes: ${votes}</p>
 
-    ${getTabComponent(activeTab, votes, count)}
+    ${getTabComponent(activeTab)}
   `;
 }
 

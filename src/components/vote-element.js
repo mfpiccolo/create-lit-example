@@ -5,7 +5,8 @@ import dispatchCustomEvent from "../dispatchCustomEvent";
 
 // Component
 function VoteElement(element) {
-  const { votes, count } = element;
+  const { lib, votes } = element;
+
   return html`
     <style>
       span {
@@ -17,15 +18,15 @@ function VoteElement(element) {
     </style>
     <div>
       <p>
-        Count: <span>${count}</span>.
+        Votes: <span>${votes}</span>.
         <button
-          @click="${() => dispatchCustomEvent(element, "INCREMENT")}"
+          @click="${() => dispatchCustomEvent(element, "INCREMENT", { lib })}"
           title="Add 1"
         >
           ↑
         </button>
         <button
-          @click="${() => dispatchCustomEvent(element, "DECREMENT")}"
+          @click="${() => dispatchCustomEvent(element, "DECREMENT", { lib })}"
           title="Minus 1"
         >
           ↓

@@ -1,12 +1,17 @@
-import { component } from "haunted";
+import { component, useContext } from "haunted";
 import { html } from "lit-html";
 
 import "./vote-element";
+import { StoreContext } from "./store-context";
 
-function ReactVoting({ votes, count }) {
+function ReactVoting() {
+  const {
+    react: { votes }
+  } = useContext(StoreContext);
+
   return html`
-    <vote-element .votes="${votes}" .count="${count}"></vote-element>
+    <vote-element .lib="${"react"}" .votes="${votes}"></vote-element>
   `;
 }
 
-customElements.define("tab-three", component(ReactVoting));
+customElements.define("react-voting", component(ReactVoting));
