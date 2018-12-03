@@ -3,53 +3,11 @@ import { html } from "lit-html";
 import { styles } from "./lit-app-styles.js";
 import "./hello-world.js";
 
-const UPDATE_TAB = "UPDATE_TAB";
-const INCREMENT = "INCREMENT";
-const DECREMENT = "DECREMENT";
-
 import initialState from "../reducers/initialState";
 
 import "./store-context";
 
-const reducer = (state = initialState, action) => {
-  let lib;
-  switch (action.type) {
-    case UPDATE_TAB:
-      const { tabNumber, greeting } = action.payload;
-      return {
-        ...state,
-        global: {
-          ...state.global,
-          activeTab: tabNumber,
-          greeting
-        }
-      };
-    case INCREMENT:
-      return {
-        ...state,
-        global: {
-          ...state.global,
-          votes: state.global.votes + 1
-        },
-        [action.payload.lib]: {
-          votes: state[action.payload.lib].votes + 1
-        }
-      };
-    case DECREMENT:
-      return {
-        ...state,
-        global: {
-          ...state.global,
-          votes: state.global.votes - 1
-        },
-        [action.payload.lib]: {
-          votes: state[action.payload.lib].votes - 1
-        }
-      };
-    default:
-      return state;
-  }
-};
+import reducer from "../reducers";
 
 function LitApp() {
   const [state, dispatch] = useReducer(reducer, initialState);
