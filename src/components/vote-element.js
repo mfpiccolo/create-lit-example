@@ -6,7 +6,6 @@ import dispatchCustomEvent from "../dispatchCustomEvent";
 // Component
 function VoteElement(element) {
   const { lib, votes } = element;
-
   return html`
     <style>
       span {

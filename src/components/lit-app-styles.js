@@ -18,7 +18,7 @@ export const styles = html`
 
     .app-header {
       background-color: #222;
-      height: 150px;
+      height: 200px;
       padding: ${SPACER * 4}px;
       color: white;
     }

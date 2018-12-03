@@ -1,4 +1,4 @@
-import { component, useReducer, createContext, useContext } from "haunted";
+import { component, useReducer } from "haunted";
 import { html } from "lit-html";
 import { styles } from "./lit-app-styles.js";
 import "./hello-world.js";
@@ -12,9 +12,9 @@ import reducer from "../reducers";
 function LitApp() {
   const [state, dispatch] = useReducer(reducer, initialState);
   const {
-    global: { greeting, activeTab }
+    global: { greeting, activeTab, votes }
   } = state;
-
+  console.log(votes);
   return html`
     ${styles}
     <store-provider .value="${state}">
@@ -22,12 +22,13 @@ function LitApp() {
         <header class="app-header">
           <img src="../assets/logo.svg" class="app-logo" alt="logo" />
           <h1 class="app-title">Ranking UI Libs</h1>
+          <h2>Total Votes: ${votes}</h2>
         </header>
 
         <hello-world
           .activeTab="${activeTab}"
           .greeting="${greeting}"
-          @DISPATCH="${el => dispatch(el.detail)}"
+          @DISPATCH="${({ detail: action }) => dispatch(action)}"
         >
         </hello-world>
 

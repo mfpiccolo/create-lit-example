@@ -8,12 +8,14 @@
     "url": "https://github.com/"
   },
   "dependencies": {
-    "haunted": "^2.3.0",
-    "lit-html": "^0.13.0",
-    "@webcomponents/webcomponentsjs": "^2.2.1",
-    "express": "^4.16.3",
-    "promise-polyfill": "^8.0.0",
     "@babel/runtime": "^7.0.0",
+    "@webcomponents/webcomponentsjs": "^2.2.1",
+    "chart.js": "^2.7.3",
+    "express": "^4.16.3",
+    "haunted": "^2.3.0",
+    "immer": "^1.8.0",
+    "lit-html": "^0.13.0",
+    "promise-polyfill": "^8.0.0",
     "whatwg-fetch": "^2.0.4"
   },
   "devDependencies": {

@@ -7,35 +7,8 @@ import "./react-voting";
 
 import { UPDATE_TAB } from "../constants";
 import dispatchCustomEvent from "../dispatchCustomEvent";
-import { StoreContext } from "./store-context";
-
-const getTabComponent = activeTab => {
-  switch (activeTab) {
-    case 1:
-      return html`
-        <lit-html-voting></lit-html-voting>
-      `;
-      break;
-    case 2:
-      return html`
-        <react-voting></react-voting>
-      `;
-      break;
-    case 3:
-      return html`
-        <vue-voting><vue-voting/>
-      `;
-      break;
-    default:
-      return "";
-  }
-};
 
 function HelloWorld(element) {
-  const {
-    global: { votes }
-  } = useContext(StoreContext);
-
   const { greeting, activeTab } = element;
   return html`
     <h1>${greeting}</h1>
@@ -73,10 +46,31 @@ function HelloWorld(element) {
     >
       Vue
     </button>
-    <p>Total Votes: ${votes}</p>
 
     ${getTabComponent(activeTab)}
   `;
 }
+
+const getTabComponent = activeTab => {
+  switch (activeTab) {
+    case 1:
+      return html`
+        <lit-html-voting></lit-html-voting>
+      `;
+      break;
+    case 2:
+      return html`
+        <react-voting></react-voting>
+      `;
+      break;
+    case 3:
+      return html`
+        <vue-voting><vue-voting/>
+      `;
+      break;
+    default:
+      return "";
+  }
+};
 
 customElements.define("hello-world", component(HelloWorld));

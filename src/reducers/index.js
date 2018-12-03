@@ -1,43 +1,24 @@
-const UPDATE_TAB = "UPDATE_TAB";
-const INCREMENT = "INCREMENT";
-const DECREMENT = "DECREMENT";
+import produce from "immer";
+import initialState from "./initialState";
 
-export default (state = initialState, action) => {
+import { UPDATE_TAB, INCREMENT, DECREMENT } from "../constants";
+
+export default produce((draft, action) => {
   let lib;
   switch (action.type) {
     case UPDATE_TAB:
-      const { tabNumber, greeting } = action.payload;
-      return {
-        ...state,
-        global: {
-          ...state.global,
-          activeTab: tabNumber,
-          greeting
-        }
-      };
+      const { tabNumber: activeTab, greeting } = action.payload;
+      draft.global = { ...draft.global, activeTab, greeting };
+      break;
     case INCREMENT:
-      return {
-        ...state,
-        global: {
-          ...state.global,
-          votes: state.global.votes + 1
-        },
-        [action.payload.lib]: {
-          votes: state[action.payload.lib].votes + 1
-        }
-      };
+      lib = action.payload.lib;
+      draft.global.votes = draft.global.votes + 1;
+      draft[lib].votes = draft[lib].votes + 1;
+      break;
     case DECREMENT:
-      return {
-        ...state,
-        global: {
-          ...state.global,
-          votes: state.global.votes + 1
-        },
-        [action.payload.lib]: {
-          votes: state[action.payload.lib].votes - 1
-        }
-      };
-    default:
-      return state;
+      lib = action.payload.lib;
+      draft.global.votes = draft.global.votes + 1;
+      draft[lib].votes = draft[lib].votes - 1;
+      break;
   }
-};
+}, initialState);
