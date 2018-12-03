@@ -9,27 +9,30 @@ const DECREMENT = "DECREMENT";
 
 export const initialState = {
   activeTab: 1,
-  clicks: 0,
-  count: 0
+  votes: 0,
+  count: 0,
+  greeting: "Vote for LitHTML"
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case UPDATE_TAB:
+      const { tabNumber, greeting } = action.payload;
       return {
         ...state,
-        activeTab: action.payload.tabNumber
+        activeTab: tabNumber,
+        greeting
       };
     case INCREMENT:
       return {
         ...state,
-        clicks: state.clicks + 1,
+        votes: state.votes + 1,
         count: state.count + 1
       };
     case DECREMENT:
       return {
         ...state,
-        clicks: state.clicks + 1,
+        votes: state.votes + 1,
         count: state.count - 1
       };
     default:
@@ -39,7 +42,7 @@ const reducer = (state = initialState, action) => {
 
 function LitApp() {
   const [state, dispatch] = useReducer(reducer, initialState);
-  const { activeTab, clicks, count } = state;
+  const { greeting, activeTab, votes, count } = state;
 
   return html`
     ${styles}
@@ -47,13 +50,13 @@ function LitApp() {
     <div class="app">
       <header class="app-header">
         <img src="../assets/logo.svg" class="app-logo" alt="logo" />
-        <h1 class="app-title">Welcome to LitHTML</h1>
+        <h1 class="app-title">Ranking UI Libs</h1>
       </header>
 
       <hello-world
         .activeTab="${activeTab}"
-        .greeting="${"Welcome"}"
-        .clicks="${clicks}"
+        .greeting="${greeting}"
+        .votes="${votes}"
         .count="${count}"
         @DISPATCH="${el => dispatch(el.detail)}"
       >

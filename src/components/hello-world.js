@@ -1,27 +1,27 @@
 import { component } from "haunted";
 import { html } from "lit-html";
 
-import "./tab-one";
-import "./tab-two";
-import "./tab-three";
+import "./lit-html-voting";
+import "./vue-voting";
+import "./react-voting";
 
 import dispatchCustomEvent from "../dispatchCustomEvent";
 
-const getTabComponent = (activeTab, clicks, count) => {
+const getTabComponent = (activeTab, votes, count) => {
   switch (activeTab) {
     case 1:
       return html`
-        <tab-one .clicks="${clicks}" .count="${count}"></tab-one>
+        <tab-one .votes="${votes}" .count="${count}"></tab-one>
       `;
       break;
     case 2:
       return html`
-        <tab-two .clicks="${clicks}" .count="${count}"></tab-one>
+        <tab-two .votes="${votes}" .count="${count}"></tab-one>
       `;
       break;
     case 3:
       return html`
-        <tab-three .clicks="${clicks}" .count="${count}"></tab-one>
+        <tab-three .votes="${votes}" .count="${count}"></tab-one>
       `;
       break;
     default:
@@ -30,36 +30,47 @@ const getTabComponent = (activeTab, clicks, count) => {
 };
 
 function HelloWorld(element) {
-  const { greeting, activeTab, clicks, count } = element;
+  const { greeting, activeTab, votes, count } = element;
   return html`
     <h1>${greeting}</h1>
+
     <button
       @click="${
-        () => dispatchCustomEvent(element, "UPDATE_TAB", { tabNumber: 1 })
+        () =>
+          dispatchCustomEvent(element, "UPDATE_TAB", {
+            tabNumber: 1,
+            greeting: "Vote for lit-html"
+          })
       }"
     >
-      Tab 1
+      lit-html
     </button>
     <button
       @click="${
-        () => dispatchCustomEvent(element, "UPDATE_TAB", { tabNumber: 2 })
+        () =>
+          dispatchCustomEvent(element, "UPDATE_TAB", {
+            tabNumber: 2,
+            greeting: "Vote for React"
+          })
       }"
     >
-      Tab 2
+      React
     </button>
     <button
       @click="${
-        () => dispatchCustomEvent(element, "UPDATE_TAB", { tabNumber: 3 })
+        () =>
+          dispatchCustomEvent(element, "UPDATE_TAB", {
+            tabNumber: 3,
+            greeting: "Vote for Vue"
+          })
       }"
     >
-      Tab 3
+      Vue
     </button>
 
-    <p class="app-intro">
-      To get started, edit <code>src/lit-app.js</code> and save to reload.
-    </p>
+    <p>Total Votes: ${votes}</p>
 
-    ${getTabComponent(activeTab, clicks, count)}
+    ${getTabComponent(activeTab, votes, count)}
   `;
 }
 

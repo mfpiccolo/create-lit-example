@@ -4,8 +4,8 @@ import { html } from "lit-html";
 import dispatchCustomEvent from "../dispatchCustomEvent";
 
 // Component
-function Counter(element) {
-  const { clicks, count } = element;
+function VoteElement(element) {
+  const { votes, count } = element;
   return html`
     <style>
       span {
@@ -17,22 +17,22 @@ function Counter(element) {
     </style>
     <div>
       <p>
-        Clicked: <span>${clicks}</span> times. Count is <span>${count}</span>.
+        Count: <span>${count}</span>.
         <button
           @click="${() => dispatchCustomEvent(element, "INCREMENT")}"
           title="Add 1"
         >
-          +
+          ↑
         </button>
         <button
           @click="${() => dispatchCustomEvent(element, "DECREMENT")}"
           title="Minus 1"
         >
-          -
+          ↓
         </button>
       </p>
     </div>
   `;
 }
 
-window.customElements.define("counter-element", component(Counter));
+window.customElements.define("vote-element", component(VoteElement));
