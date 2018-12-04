@@ -4,9 +4,9 @@ import { html } from "lit-html";
 import { UPDATE_TAB } from "../constants";
 import dispatchCustomEvent from "../dispatchCustomEvent";
 
-import "../components/vote-element";
+import "./vote-element";
 
-function HelloWorld(element) {
+function TabView(element) {
   const { greeting, activeLib } = element;
 
   return html`
@@ -50,4 +50,4 @@ function HelloWorld(element) {
   `;
 }
 
-customElements.define("hello-world", component(HelloWorld));
+customElements.define("tab-view", component(TabView));

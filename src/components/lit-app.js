@@ -1,7 +1,7 @@
-import { component, useReducer } from "haunted";
+import { component, useReducer, useEffect } from "haunted";
 import { html } from "lit-html";
 import { styles } from "./lit-app-styles.js";
-import "./hello-world.js";
+import "./tab-view.js";
 
 import initialState from "../reducers/initialState";
 
@@ -13,20 +13,11 @@ import reducer from "../reducers";
 function LitApp() {
   const [state, dispatch] = useReducer(reducer, initialState);
   const {
-    global: { greeting, activeLib, votes }
+    global: { greeting, activeLib, votes },
+    litHtml: { votes: litHtmlVotes },
+    react: { votes: reactVotes },
+    vue: { votes: vueVotes }
   } = state;
-
-  const data = {
-    labels: ["January", "February", "March", "April", "May", "June", "July"],
-    datasets: [
-      {
-        label: "My First dataset",
-        backgroundColor: "rgb(255, 99, 132)",
-        borderColor: "rgb(255, 99, 132)",
-        data: [0, 10, 5, 2, 20, 30, 45]
-      }
-    ]
-  };
 
   return html`
     ${styles}
@@ -38,16 +29,32 @@ function LitApp() {
           <h2>Total Votes: ${votes}</h2>
         </header>
 
-        <hello-world
+        <tab-view
           .activeLib="${activeLib}"
           .greeting="${greeting}"
           @DISPATCH="${({ detail: action }) => dispatch(action)}"
         >
-        </hello-world>
+        </tab-view>
         <base-chart
           .type="${"bar"}"
-          .data="${data}"
-          .options="${{}}"
+          .label="${"View Libraries"}"
+          .values="${[litHtmlVotes, reactVotes, vueVotes]}"
+          .labels="${["lit-html", "React", "Vue"]}"
+          .options="${
+            {
+              scales: {
+                yAxes: [
+                  {
+                    display: true,
+                    ticks: {
+                      suggestedMin: 0,
+                      beginAtZero: true
+                    }
+                  }
+                ]
+              }
+            }
+          }"
         ></base-chart>
         <a
           aria-label="Create lit app on Github"

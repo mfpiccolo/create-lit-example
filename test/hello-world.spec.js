@@ -1,13 +1,13 @@
-import { html, render } from 'lit-html';
-import { expect } from 'chai';
+import { html, render } from "lit-html";
+import { expect } from "chai";
 
-import '../src/hello-world';
+import "../src/tab-view";
 
-describe('hello-world', () => {
+describe("tab-view", () => {
   let element;
 
   const fixture = html`
-    <hello-world .greeting=${'Welcome'}></hello-world>
+    <tab-view .greeting="${"Welcome"}"></tab-view>
   `;
 
   beforeEach(async () => {
@@ -20,8 +20,8 @@ describe('hello-world', () => {
     element.remove();
   });
 
-  it('should render a welcome message', () => {
-    const title = element.shadowRoot.querySelector('h1');
-    expect(title.innerText).to.equal('Welcome');
+  it("should render a welcome message", () => {
+    const title = element.shadowRoot.querySelector("h1");
+    expect(title.innerText).to.equal("Welcome");
   });
 });
