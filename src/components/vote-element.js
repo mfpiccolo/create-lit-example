@@ -1,11 +1,16 @@
-import { component } from "haunted";
+import { component, useContext } from "haunted";
 import { html } from "lit-html";
 
 import dispatchCustomEvent from "../dispatchCustomEvent";
+import { StoreContext } from "./store-context";
 
 // Component
 function VoteElement(element) {
-  const { lib, votes } = element;
+  const { lib } = element;
+
+  const store = useContext(StoreContext);
+  const votes = store[lib].votes;
+
   return html`
     <style>
       span {

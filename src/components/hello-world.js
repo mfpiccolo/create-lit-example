@@ -1,15 +1,14 @@
-import { component, useContext } from "haunted";
+import { component } from "haunted";
 import { html } from "lit-html";
-
-import "./lit-html-voting";
-import "./vue-voting";
-import "./react-voting";
 
 import { UPDATE_TAB } from "../constants";
 import dispatchCustomEvent from "../dispatchCustomEvent";
 
+import "../components/vote-element";
+
 function HelloWorld(element) {
-  const { greeting, activeTab } = element;
+  const { greeting, activeLib } = element;
+
   return html`
     <h1>${greeting}</h1>
 
@@ -17,7 +16,7 @@ function HelloWorld(element) {
       @click="${
         () =>
           dispatchCustomEvent(element, UPDATE_TAB, {
-            tabNumber: 1,
+            activeLib: "litHtml",
             greeting: "Vote for lit-html"
           })
       }"
@@ -28,7 +27,7 @@ function HelloWorld(element) {
       @click="${
         () =>
           dispatchCustomEvent(element, UPDATE_TAB, {
-            tabNumber: 2,
+            activeLib: "react",
             greeting: "Vote for React"
           })
       }"
@@ -39,7 +38,7 @@ function HelloWorld(element) {
       @click="${
         () =>
           dispatchCustomEvent(element, UPDATE_TAB, {
-            tabNumber: 3,
+            activeLib: "vue",
             greeting: "Vote for Vue"
           })
       }"
@@ -47,30 +46,8 @@ function HelloWorld(element) {
       Vue
     </button>
 
-    ${getTabComponent(activeTab)}
+    <vote-element .lib="${activeLib}"></vote-element>
   `;
 }
-
-const getTabComponent = activeTab => {
-  switch (activeTab) {
-    case 1:
-      return html`
-        <lit-html-voting></lit-html-voting>
-      `;
-      break;
-    case 2:
-      return html`
-        <react-voting></react-voting>
-      `;
-      break;
-    case 3:
-      return html`
-        <vue-voting><vue-voting/>
-      `;
-      break;
-    default:
-      return "";
-  }
-};
 
 customElements.define("hello-world", component(HelloWorld));

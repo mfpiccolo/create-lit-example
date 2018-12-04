@@ -7,8 +7,8 @@ export default produce((draft, action) => {
   let lib;
   switch (action.type) {
     case UPDATE_TAB:
-      const { tabNumber: activeTab, greeting } = action.payload;
-      draft.global = { ...draft.global, activeTab, greeting };
+      const { activeLib, greeting } = action.payload;
+      draft.global = { ...draft.global, activeLib, greeting };
       break;
     case INCREMENT:
       lib = action.payload.lib;
